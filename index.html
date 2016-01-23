@@ -28,43 +28,118 @@
 
         <script type="text/javascript">
             var socket = io.connect(),
-                user = {};
+                user = {},
+                tpl;
 
             socket.on('initApp', function (objInit) {
-                user.id = objInit.uid
+                user.id = objInit.uid;
+
+                console.log(objInit);
+
+                _(objInit.list).each(function (item, i) {
+                    $('#piList').append( tpl(item) );
+                });
+            });
+            socket.on('new_pi', function (obj) {
+                console.log('new PI', obj.uid, user.id);
+                newPI(obj.pi, obj.uid === user.id);
+            });
+            socket.on('edit_pi', function (obj) {
+                StartEditPi(obj.pid, obj.uid === user.id)
+            });
+            socket.on('test', function (obj) {
+
             });
 
 
 
-            // REMOVE POST_IT
-            $('#wrapper').on('click', '.remove_btn', function (e) {
-                var $item = $(e.currentTarget).parents('li');
+            $(function () {
+                tpl = _( $('#postItTpl').html() ).template();
 
-                if (!$('#wrapper').hasClass('editing') && !$item.hasClass('editing')) {
+
+
+                // NEW POST-IT
+                $('#newPi').on('click', function (e) {
+                    socket.emit('new_pi', {
+                        'uid' : user.id
+                    });
                     e.stopPropagation();
+                });
 
-                    var bool = confirm('Êtes vous sûr de vouloir supprimer ce post-it ?');
+                // REMOVE POST_IT
+                $('#wrapper').on('click', '.remove_btn', function (e) {
+                    var $item = $(e.currentTarget).parents('li');
 
-                    if (bool) {
-                        $item.hide(400, function () {
-                            $item.remove();
-                        });
+                    if (!$('#wrapper').hasClass('editing') && !$item.hasClass('editing')) {
+                        e.stopPropagation();
+
+                        var bool = confirm('Êtes vous sûr de vouloir supprimer ce post-it ?');
+
+                        if (bool) {
+                            $item.hide(400, function () {
+                                $item.remove();
+                            });
+                        }
                     }
-                }
 
-                console.log('edit');
+                    console.log('edit');
+                });
+
+                // START EDIT POST-IT
+                $('#wrapper').on('click', '.edit_btn', function (e) {
+                    var $item = $(e.currentTarget).parents('li');
+
+                    if (!$('#wrapper').hasClass('editing') && !$item.hasClass('editing')) {
+
+
+                        socket.emit('edit_pi', {
+                            'uid' : user.id,
+                            'pid' : $item.data('id')
+                        });
+                        e.stopPropagation();
+                    }
+
+                    console.log('edit');
+                });
+
+                // STOP EDITING MODE
+                $(document.body).on('click', function () {
+                    $item = $('.pi_item.editing');
+
+                    if ($item.length) {
+                        var title = $item.find('input').val(),
+                            desc = $item.find('textarea').val();
+
+                        $item.find('h2').text(title);
+                        $item.find('p').text(desc);
+                    }
+                    $(document.body).find('.editing').removeClass('editing');
+                });
+
+
+                $('#wrapper').on('click', '.pi_item.editing > div', function (e) {
+                    e.stopPropagation();
+                });
             });
 
-            // EDIT POST-IT
-            $('#wrapper').on('click', '.edit_btn', function (e) {
-                var $item = $(e.currentTarget).parents('li');
 
-                if (!$('#wrapper').hasClass('editing') && !$item.hasClass('editing')) {
-                    e.stopPropagation();
 
-                    var title = $item.find('h2').text(),
-                        desc = $item.find('p').text();
+            function newPI (data, isOwner) {
+                var $item = $( tpl(data) );
+                $item.addClass(isOwner ? 'editing' : 'lock').appendTo('#piList').data(data.id);
 
+                if (isOwner) {
+                    $item.find('input').get(0).focus();
+                    $('#wrapper').addClass('editing');
+                }
+            }
+            function StartEditPi (id, isOwner) {
+
+                var $item = $('pi' + id),
+                    title = $item.find('h2').text(),
+                    desc = $item.find('p').text();
+
+                if (isOwner) {
                     $item.find('input').val(title),
                     $item.find('textarea').val(desc);
 
@@ -72,46 +147,20 @@
                     $item.addClass('editing');
                     $item.find('input').get(0).focus();
                 }
-
-                console.log('edit');
-            });
-
-            // STOP EDITING MODE
-            $(document.body).on('click', function () {
-                $item = $('.pi_item.editing');
-                if ($item.length) {
-                    var title = $item.find('input').val(),
-                        desc = $item.find('textarea').val();
-
-                    $item.find('h2').text(title);
-                    $item.find('p').text(desc);
+                else {
+                    $item.addClass('lock');
                 }
-                $(document.body).find('.editing').removeClass('editing');
-            });
-
-
-            $('#wrapper').on('click', '.pi_item.editing > div', function (e) {
-                e.stopPropagation();
-            });
-
-            // NEW POST-IT
-            $('#newPi').on('click', function (e) {
-                var $item = $($('#postItTpl').html());
-                $item.addClass('editing').appendTo('#piList');
-                $('#wrapper').addClass('editing');
-                $item.find('input').get(0).focus();
-                e.stopPropagation();
-            });
+            }
 
 
 
         </script>
 
         <script id="postItTpl" type="text/template">
-            <li id="pi0" class="pi_item">
+            <li id="pi<%= id %>" class="pi_item <%= editor != null ? (editor === user.id ? 'editing' : 'lock') : '' %>">
                 <div class="text">
-                    <h2>Titre</h2>
-                    <p>Text du Pi</p>
+                    <h2><%= title %></h2>
+                    <p><%= desc %></p>
                     <a href="#" class="edit_btn" title="Editer"></a>
                     <a href="#" class="remove_btn" title="Supprimer"></a>
                 </div>

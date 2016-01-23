@@ -95,6 +95,17 @@ p {
             opacity: .9;
         }
     }
+
+    &.lock {
+        opacity: .5;
+        > div {
+            background-color: #555;
+        }
+
+        .edit_btn, .remove_btn {
+            display: none;
+        }
+    }
 }
 
 .edit_btn {

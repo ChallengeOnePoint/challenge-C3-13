@@ -161,8 +161,20 @@ p {
 .pi_item:hover .edit_btn, .pi_item:hover .remove_btn {
   opacity: .9;
 }
+/* line 99, ../sass/style.scss */
+.pi_item.lock {
+  opacity: .5;
+}
+/* line 101, ../sass/style.scss */
+.pi_item.lock > div {
+  background-color: #555;
+}
+/* line 105, ../sass/style.scss */
+.pi_item.lock .edit_btn, .pi_item.lock .remove_btn {
+  display: none;
+}
 
-/* line 100, ../sass/style.scss */
+/* line 111, ../sass/style.scss */
 .edit_btn {
   display: block;
   position: absolute;
@@ -175,7 +187,7 @@ p {
   transition: opacity .5s;
 }
 
-/* line 111, ../sass/style.scss */
+/* line 122, ../sass/style.scss */
 .remove_btn {
   display: block;
   position: absolute;
@@ -188,11 +200,11 @@ p {
   transition: opacity .5s;
 }
 
-/* line 123, ../sass/style.scss */
+/* line 134, ../sass/style.scss */
 .form {
   display: none;
 }
-/* line 126, ../sass/style.scss */
+/* line 137, ../sass/style.scss */
 .form input {
   width: 100%;
   font-size: 16px;
@@ -201,7 +213,7 @@ p {
   padding: 10px 0;
   text-align: center;
 }
-/* line 134, ../sass/style.scss */
+/* line 145, ../sass/style.scss */
 .form textarea {
   height: 60%;
   width: 100%;
