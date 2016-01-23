@@ -1,0 +1,211 @@
+/* line 5, ../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+/* line 22, ../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1;
+}
+
+/* line 24, ../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 26, ../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 28, ../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 30, ../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 103, ../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 32, ../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 116, ../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block;
+}
+
+/* line 3, ../sass/style.scss */
+html, body {
+  font-family: arial, sans-serif;
+  background-color: #333;
+  font-size: 10px;
+  height: 100%;
+}
+
+/* line 10, ../sass/style.scss */
+.cf:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+/* line 16, ../sass/style.scss */
+#wrapper {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-bottom: 200px;
+}
+/* line 22, ../sass/style.scss */
+#wrapper.editing .pi_item {
+  opacity: .5;
+}
+/* line 26, ../sass/style.scss */
+#wrapper.editing .pi_item:hover .edit_btn, #wrapper.editing .pi_item:hover .remove_btn {
+  opacity: 0;
+}
+/* line 31, ../sass/style.scss */
+#wrapper.editing .pi_item.editing {
+  opacity: 1;
+}
+/* line 35, ../sass/style.scss */
+#wrapper.editing .pi_item.editing .form {
+  display: block;
+}
+/* line 38, ../sass/style.scss */
+#wrapper.editing .pi_item.editing .text {
+  display: none;
+}
+
+/* line 46, ../sass/style.scss */
+.new_pi_btn {
+  display: block;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 100px;
+  height: 100px;
+  background: transparent url("../img/new_pi_btn.png") no-repeat center center/100% auto;
+}
+
+/* line 56, ../sass/style.scss */
+h1 {
+  font-size: 5em;
+  padding: 40px 0;
+  color: #A98;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* line 64, ../sass/style.scss */
+h2 {
+  font-size: 3em;
+  margin-bottom: 5%;
+}
+
+/* line 68, ../sass/style.scss */
+p {
+  font-size: 2em;
+  color: #333;
+}
+
+/* line 74, ../sass/style.scss */
+.pi_item {
+  float: left;
+  margin: 2.5%;
+  width: 20%;
+  padding-top: 20%;
+  position: relative;
+  text-align: center;
+}
+/* line 82, ../sass/style.scss */
+.pi_item > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 5%;
+  background-color: #ff7f00;
+  box-sizing: border-box;
+}
+/* line 94, ../sass/style.scss */
+.pi_item:hover .edit_btn, .pi_item:hover .remove_btn {
+  opacity: .9;
+}
+
+/* line 100, ../sass/style.scss */
+.edit_btn {
+  display: block;
+  position: absolute;
+  top: 35px;
+  right: -25px;
+  width: 50px;
+  height: 50px;
+  background: transparent url(../img/edit_btn.png) no-repeat center center/100% auto;
+  opacity: 0;
+  transition: opacity .5s;
+}
+
+/* line 111, ../sass/style.scss */
+.remove_btn {
+  display: block;
+  position: absolute;
+  top: -25px;
+  right: -25px;
+  width: 50px;
+  height: 50px;
+  background: transparent url("../img/remove_btn.png") no-repeat center center/100% auto;
+  opacity: 0;
+  transition: opacity .5s;
+}
+
+/* line 123, ../sass/style.scss */
+.form {
+  display: none;
+}
+/* line 126, ../sass/style.scss */
+.form input {
+  width: 100%;
+  font-size: 16px;
+  border: 0;
+  margin-bottom: 10%;
+  padding: 10px 0;
+  text-align: center;
+}
+/* line 134, ../sass/style.scss */
+.form textarea {
+  height: 60%;
+  width: 100%;
+  font-size: 16px;
+  border: 0;
+  resize: none;
+}

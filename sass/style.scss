@@ -1,0 +1,144 @@
+@import "compass/reset";
+
+html, body {
+    font-family: arial, sans-serif;
+    background-color: #333;
+    font-size: 10px;
+    height: 100%;
+}
+
+.cf:after {
+    content:"";
+    display: block;
+    clear: both;
+}
+
+#wrapper {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding-bottom: 200px;
+
+    &.editing {
+        .pi_item {
+            opacity: .5;
+
+            &:hover {
+                .edit_btn, .remove_btn {
+                    opacity: 0;
+                }
+            }
+
+            &.editing {
+                opacity: 1;
+
+
+                .form {
+                    display: block;
+                }
+                .text {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+.new_pi_btn {
+    display: block;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 100px;
+    height: 100px;
+    background: transparent url('../img/new_pi_btn.png') no-repeat center center / 100% auto;
+}
+
+h1 {
+    font-size: 5em;
+    padding: 40px 0;
+    color: #A98;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+h2 {
+    font-size: 3em;
+    margin-bottom: 5%;
+}
+p {
+    font-size: 2em;
+    color: #333;
+}
+
+
+.pi_item {
+    float: left;
+    margin: 2.5%;
+    width: 20%;
+    padding-top: 20%;
+    position: relative;
+    text-align: center;
+
+    > div {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        padding: 5%;
+        background-color: rgba(255, 127, 0, 1);
+        box-sizing: border-box;
+    }
+
+    &:hover {
+        .edit_btn, .remove_btn {
+            opacity: .9;
+        }
+    }
+}
+
+.edit_btn {
+    display: block;
+    position: absolute;
+    top: 35px;
+    right: -25px;
+    width: 50px;
+    height: 50px;
+    background: transparent url(../img/edit_btn.png) no-repeat center center / 100% auto;
+    opacity: 0;
+    transition: opacity .5s;
+}
+.remove_btn {
+    display: block;
+    position: absolute;
+    top: -25px;
+    right: -25px;
+    width: 50px;
+    height: 50px;
+    background: transparent url('../img/remove_btn.png') no-repeat center center / 100% auto;
+    opacity: 0;
+    transition: opacity .5s;
+}
+
+.form {
+    display: none;
+
+    input {
+        width: 100%;
+        font-size: 16px;
+        border: 0;
+        margin-bottom: 10%;
+        padding: 10px 0;
+        text-align: center;
+    }
+    textarea {
+        height: 60%;
+        width: 100%;
+        font-size: 16px;
+        border: 0;
+        resize: none;
+    }
+}
+
+
+

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+        <title>Challenge Socket.io</title>
+        <link rel="stylesheet" type="text/css" href="http://localhost:8000/css/style.css">
+    </head>
+    <body>
+
+        <div id="wrapper">
+            <h1>Challenge POST-IT</h1>
+            <a id="newPi" class="new_pi_btn"href="#" title="new Post-it"></a>
+            <section>
+                <ul id="piList" class="cf">
+
+                </ul>
+            </section>
+        </div>
+
+        <script type="text/javascript" src="http://localhost:8000/js/jquery.js"></script>
+        <script type="text/javascript" src="http://localhost:8000/js/underscore.js"></script>
+        <script type="text/javascript" src="http://localhost:8080/socket.io/socket.io.js"></script>
+        <script type="text/javascript">
+            var socket = io.connect('http://localhost:8080');
+        </script>
+
+
+        <script type="text/javascript">
+            var socket = io.connect(),
+                user = {};
+
+            socket.on('initApp', function (objInit) {
+                user.id = objInit.uid
+            });
+
+
+
+            // REMOVE POST_IT
+            $('#wrapper').on('click', '.remove_btn', function (e) {
+                var $item = $(e.currentTarget).parents('li');
+
+                if (!$('#wrapper').hasClass('editing') && !$item.hasClass('editing')) {
+                    e.stopPropagation();
+
+                    var bool = confirm('Êtes vous sûr de vouloir supprimer ce post-it ?');
+
+                    if (bool) {
+                        $item.hide(400, function () {
+                            $item.remove();
+                        });
+                    }
+                }
+
+                console.log('edit');
+            });
+
+            // EDIT POST-IT
+            $('#wrapper').on('click', '.edit_btn', function (e) {
+                var $item = $(e.currentTarget).parents('li');
+
+                if (!$('#wrapper').hasClass('editing') && !$item.hasClass('editing')) {
+                    e.stopPropagation();
+
+                    var title = $item.find('h2').text(),
+                        desc = $item.find('p').text();
+
+                    $item.find('input').val(title),
+                    $item.find('textarea').val(desc);
+
+                    $('#wrapper').addClass('editing');
+                    $item.addClass('editing');
+                    $item.find('input').get(0).focus();
+                }
+
+                console.log('edit');
+            });
+
+            // STOP EDITING MODE
+            $(document.body).on('click', function () {
+                $item = $('.pi_item.editing');
+                if ($item.length) {
+                    var title = $item.find('input').val(),
+                        desc = $item.find('textarea').val();
+
+                    $item.find('h2').text(title);
+                    $item.find('p').text(desc);
+                }
+                $(document.body).find('.editing').removeClass('editing');
+            });
+
+
+            $('#wrapper').on('click', '.pi_item.editing > div', function (e) {
+                e.stopPropagation();
+            });
+
+            // NEW POST-IT
+            $('#newPi').on('click', function (e) {
+                var $item = $($('#postItTpl').html());
+                $item.addClass('editing').appendTo('#piList');
+                $('#wrapper').addClass('editing');
+                $item.find('input').get(0).focus();
+                e.stopPropagation();
+            });
+
+
+
+        </script>
+
+        <script id="postItTpl" type="text/template">
+            <li id="pi0" class="pi_item">
+                <div class="text">
+                    <h2>Titre</h2>
+                    <p>Text du Pi</p>
+                    <a href="#" class="edit_btn" title="Editer"></a>
+                    <a href="#" class="remove_btn" title="Supprimer"></a>
+                </div>
+                <div class="form">
+                    <input type="text" value="" placeholder="Titre" />
+                    <textarea placeholder="Texte du post-it"></textarea>
+                </div>
+            </li>
+        </script>
+
+    </body>
+</html>
